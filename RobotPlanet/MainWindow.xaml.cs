@@ -37,6 +37,7 @@ public partial class MainWindow : Window
                 "CleanerBot" => new CleanerBot(name, 100),
                 "ExplorerBot" => new ExplorerBot(name, 100),
                 "RepairBot" => new RepairBot(name, 100),
+                "BuilderBot" => new BuilderBot(name, 100),
                 _ => new GuardBot(name, 100)
             };
 

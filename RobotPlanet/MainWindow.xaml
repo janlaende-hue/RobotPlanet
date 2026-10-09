@@ -42,6 +42,7 @@
                 <ComboBoxItem Content="ExplorerBot"/>
                 <ComboBoxItem Content="RepairBot"/>
                 <ComboBoxItem Content="GuardBot"/>
+                <ComboBoxItem Content="BuilderBot"/>
 
             </ComboBox>
 
