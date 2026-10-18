@@ -15,9 +15,10 @@ namespace RobotPlanet.Core.Models
         {
             if (Battery < 20)
             {
-                return $"{Name} fell asleep while on duty!";
+                Battery = Math.Max(0, Battery - 5);
+                return $"{Name} fell asleep while on duty! Battery now {Battery}%";
             }
-            return $"{Name} arrested a vending machine!";
+            return PerformCrazyAction(20, $"{Name} arrested a vending machine!");
         }
     }
 }

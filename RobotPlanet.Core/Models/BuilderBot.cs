@@ -13,7 +13,7 @@ namespace RobotPlanet.Core.Models
 
         public override string CrazyAction()
         {
-            return $"{Name} built a giant banana-shaped castle on the Moon!";
+            return PerformCrazyAction(18, $"{Name} built a giant banana-shaped castle on the Moon!");
         }
     }
 }

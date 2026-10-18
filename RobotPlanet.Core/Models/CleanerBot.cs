@@ -10,6 +10,6 @@ public class CleanerBot : Robot, Ichargeable
     
     public override string CrazyAction()
     {
-        return $"{Name} is cleaning the entire planet!";
+        return PerformCrazyAction(15, $"{Name} is cleaning the entire planet!");
     }
 }

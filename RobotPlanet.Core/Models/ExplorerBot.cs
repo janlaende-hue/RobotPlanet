@@ -15,6 +15,6 @@ public class ExplorerBot : Robot, IScan, Ichargeable
 
     public override string CrazyAction()
     {
-        return $"{Name} is exploring the entire planet!";
+        return PerformCrazyAction(12, $"{Name} is exploring the entire planet!");
     }
 }

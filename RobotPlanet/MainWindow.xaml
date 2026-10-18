@@ -1,109 +1,150 @@
 ﻿<Window x:Class="RobotPlanet.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Robot Planet"
-        Height="522"
-        Width="767">
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Robot Planet"
+    Height="700"
+    Width="900"
+    SizeToContent="Height"
+    WindowStartupLocation="CenterScreen">
 
-    <Grid Margin="10">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="10">
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="220"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="230"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-            <TextBlock Text="Robots"
-                       FontSize="18"
+            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+
+                <TextBlock Text="Search"
+                           FontSize="14"
+                           FontWeight="Bold"
+                           Margin="0,0,0,5"/>
+                <TextBox Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" 
+                         Height="30"
+                         Margin="0,0,0,15"/>
+
+                <TextBlock Text="Robots"
+                           FontSize="14"
+                           FontWeight="Bold"
+                           Margin="0,0,0,5"/>
+                <ListBox x:Name="RobotListBox"
+                         Height="220"
+                         DisplayMemberPath="Name"
+                         ItemsSource="{Binding DisplayedRobots}"
+                         SelectedItem="{Binding SelectedRobot, Mode=TwoWay}"
+                         Margin="0,0,0,10"/>
+
+
+                <TextBlock Text="Robot Summary"
+                           FontSize="14"
+                           FontWeight="Bold"
+                           Margin="0,0,0,5"/>
+                <ListBox ItemsSource="{Binding GroupSummary}" 
+                         Height="80" 
+                         Margin="0,0,0,15"/>
+
+                <TextBlock Text="Sorted By Name"
+                           FontSize="14"
+                           FontWeight="Bold"
+                           Margin="0,0,0,5"/>
+                <ListBox Height="120" 
+                         DisplayMemberPath="Name"
+                         ItemsSource="{Binding DisplayedRobots}"
+                         Margin="0,0,0,10"/>
+
+
+                <StackPanel Orientation="Vertical" Margin="0,5,0,0">
+                    <Button Content="Filter" Command="{Binding ApplyFilterCommand}" Height="28" Margin="0,0,0,3"/>
+                    <Button Content="Sort by Battery" Command="{Binding SortCommand}" Height="28" Margin="0,0,0,3"/>
+                    <Button Content="Group by Type" Command="{Binding GroupCommand}" Height="28"/>
+                </StackPanel>
+
+            </StackPanel>
+
+        <StackPanel Grid.Column="1">
+
+
+            <TextBlock Text="Add Robot"
+                       FontSize="16"
                        FontWeight="Bold"
                        Margin="0,0,0,10"/>
 
-            <ListBox x:Name="RobotListBox"
-                     Height="420"
-                     DisplayMemberPath="Name"
-                     SelectionChanged="RobotListBox_SelectionChanged"/>
+            <TextBlock Text="Robot Name:" FontSize="12" Margin="0,0,0,3"/>
+            <TextBox Text="{Binding NewRobotName, UpdateSourceTrigger=PropertyChanged}"
+                     Height="30"
+                     Margin="0,0,0,10"/>
 
-        </StackPanel>
-        <StackPanel Grid.Column="1"
-                    Margin="15,0">
+            <TextBlock Text="Robot Type:" FontSize="12" Margin="0,0,0,3"/>
+            <ComboBox ItemsSource="{Binding Types}"
+                      SelectedItem="{Binding SelectedType}"
+                      Height="30"
+                      Margin="0,0,0,10"/>
 
-            <TextBlock Text="Name"/>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                <Button Content="Add Robot"
+                        Height="32"
+                        Padding="5"
+                        Command="{Binding AddCommand}"
+                        Margin="0,0,5,0"/>
+                <Button Content="Remove Robot"
+                        Height="32"
+                        Padding="5"
+                        Command="{Binding RemoveCommand}"/>
+            </StackPanel>
 
-            <TextBox x:Name="NameTextBox"
-                     Margin="0,5,0,15"/>
 
-            <TextBlock Text="Robot Type"/>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                <Button Content="Work" Width="70" Height="28" Margin="0,0,3,0" Command="{Binding PerformTaskCommand}"/>
+                <Button Content="Crazy Action" Width="85" Height="28" Margin="0,0,3,0" Command="{Binding CrazyCommand}"/>
+                <Button Content="Charge" Width="70" Height="28" Margin="0,0,3,0" Command="{Binding ChargeCommand}"/>
+                <Button Content="Scan" Width="70" Height="28" Margin="0,0,3,0" Command="{Binding ScanCommand}"/>
+                <Button Content="Repair" Width="70" Height="28" Command="{Binding RepairCommand}"/>
+            </StackPanel>
 
-            <ComboBox x:Name="RobotTypeComboBox"
-                      Margin="0,5,0,15">
 
-                <ComboBoxItem Content="CleanerBot"/>
-                <ComboBoxItem Content="ExplorerBot"/>
-                <ComboBoxItem Content="RepairBot"/>
-                <ComboBoxItem Content="GuardBot"/>
-                <ComboBoxItem Content="BuilderBot"/>
-
-            </ComboBox>
-
-            <Button Content="Add Robot"
-                    Height="30"
-                    Click="AddRobot_Click"/>
-            <Button Content="Remove Robot"
-                    Click="RemoveRobot_Click" Height="32"/>
-
-        </StackPanel>
-        <StackPanel Grid.Column="2"
-                    Margin="15,0">
-
-            <TextBlock Text="Actions"
-                       FontSize="18"
-                       FontWeight="Bold"/>
-
-            <ProgressBar x:Name="BatteryBar"
-                         Height="20"
-                         Maximum="100"
-                         Margin="0,10,0,15"/>
-
-            <WrapPanel>
-
-                <Button Content="Task"
-                        Width="90"
-                        Margin="3"
-                        Click="PerformTask_Click"/>
-
-                <Button Content="Crazy"
-                        Width="90"
-                        Margin="3"
-                        Click="CrazyAction_Click"/>
-
-                <Button Content="Scan"
-                        Width="90"
-                        Margin="3"
-                        Click="Scan_Click"/>
-
-                <Button Content="Repair"
-                        Width="90"
-                        Margin="3"
-                        Click="Repair_Click"/>
-
-                <Button Content="Charge"
-                        Width="90"
-                        Margin="3"
-                        Click="Charge_Click"/>
-
-            </WrapPanel>
-
-            <TextBlock Text="Logs"
-                       FontSize="18"
+            <TextBlock Text="Robot Details"
+                       FontSize="16"
                        FontWeight="Bold"
-                       Margin="0,20,0,10"/>
+                       Margin="0,0,0,10"/>
 
-            <ListBox x:Name="LogListBox"
-                     Height="300"/>
+            <Grid Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Name:" FontWeight="Bold" Grid.Column="0" Grid.Row="0" Margin="0,0,10,3"/>
+                <TextBlock Text="{Binding SelectedRobot.Name, TargetNullValue='None'}" Grid.Column="1" Grid.Row="0" Margin="0,0,0,3"/>
+
+                <TextBlock Text="Type:" FontWeight="Bold" Grid.Column="0" Grid.Row="1" Margin="0,0,10,3"/>
+                <TextBlock Grid.Column="1" Grid.Row="1" Margin="0,0,0,3" Text="{Binding SelectedRobot, TargetNullValue=None}"/>
+
+                <TextBlock Text="Battery:" FontWeight="Bold" Grid.Column="0" Grid.Row="2" Margin="0,0,10,0" VerticalAlignment="Top"/>
+                <ProgressBar Value="{Binding SelectedRobot.Battery, Mode=OneWay, TargetNullValue=0}"
+                             Height="20"
+                             Maximum="100"
+                             Grid.Column="1" Grid.Row="2"/>
+            </Grid>
+
+
+            <TextBlock Text="Log"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       Margin="0,0,0,10"/>
+
+            <ListBox ItemsSource="{Binding Log}"
+                     Height="250"/>
 
         </StackPanel>
 
-    </Grid>
+        </Grid>
+    </ScrollViewer>
 
 </Window>
