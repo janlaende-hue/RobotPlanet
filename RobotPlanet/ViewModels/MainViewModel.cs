@@ -10,11 +10,6 @@ using RobotPlanet.Services;
 
 namespace RobotPlanet.ViewModels
 {
-    /// <summary>
-    /// Main ViewModel for the RobotPlanet application.
-    /// Manages the Robot repository, user interactions, and UI state.
-    /// Implements MVVM pattern with INotifyPropertyChanged and ICommand.
-    /// </summary>
     public class MainViewModel : INotifyPropertyChanged
     {
         private readonly Repository<Robot> repository = new();

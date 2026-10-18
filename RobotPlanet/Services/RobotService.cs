@@ -15,6 +15,9 @@ namespace RobotPlanet.Services
                 "RepairBot" => new RepairBot(name, battery),
                 "BuilderBot" => new BuilderBot(name, battery),
                 "GuardBot" => new GuardBot(name, battery),
+                "ChefBot" => new ChefBot(name, battery),
+                "MinerBot" => new MinerBot(name, battery),
+                "FarmerBot" => new FarmerBot(name, battery),
                 _ => throw new ArgumentException($"Unknown robot type: {robotType}")
             };
         }
@@ -27,7 +30,10 @@ namespace RobotPlanet.Services
                 "ExplorerBot",
                 "RepairBot",
                 "GuardBot",
-                "BuilderBot"
+                "BuilderBot",
+                "ChefBot",
+                "MinerBot",
+                "FarmerBot"
             };
         }
     }
