@@ -7,6 +7,7 @@ using RobotPlanet.Core.Models;
 using RobotPlanet.Core.Interfaces;
 using RobotPlanet.Commands;
 using RobotPlanet.Services;
+using RobotPlanet.Models;
 
 namespace RobotPlanet.ViewModels
 {
@@ -14,6 +15,7 @@ namespace RobotPlanet.ViewModels
     {
         private readonly Repository<Robot> repository = new();
         private readonly RobotService robotService = new();
+        private readonly SimulationViewModel simulationViewModel;
 
         public ObservableCollection<Robot> Robots { get; } = new();
         public ObservableCollection<Robot> DisplayedRobots { get; } = new();
@@ -61,8 +63,42 @@ namespace RobotPlanet.ViewModels
         public ICommand SortCommand { get; }
         public ICommand GroupCommand { get; }
 
+        // Simulation properties
+        public ObservableCollection<Robot> AvailableRobots => Robots;
+        public ObservableCollection<SimulationResult> SimulationResults => simulationViewModel.SimulationResults;
+
+        public Robot? SimulationRobot1
+        {
+            get => simulationViewModel.SimulationRobot1;
+            set { simulationViewModel.SimulationRobot1 = value; OnPropertyChanged(nameof(SimulationRobot1)); }
+        }
+
+        public Robot? SimulationRobot2
+        {
+            get => simulationViewModel.SimulationRobot2;
+            set { simulationViewModel.SimulationRobot2 = value; OnPropertyChanged(nameof(SimulationRobot2)); }
+        }
+
+        public Robot? SimulationRobot3
+        {
+            get => simulationViewModel.SimulationRobot3;
+            set { simulationViewModel.SimulationRobot3 = value; OnPropertyChanged(nameof(SimulationRobot3)); }
+        }
+
+        public string SimulationWorkloadInput
+        {
+            get => simulationViewModel.SimulationWorkloadInput;
+            set { simulationViewModel.SimulationWorkloadInput = value; OnPropertyChanged(nameof(SimulationWorkloadInput)); }
+        }
+
+        public ICommand RunSequentialCommand => simulationViewModel.RunSequentialCommand;
+        public ICommand RunParallelCommand => simulationViewModel.RunParallelCommand;
+        public ICommand SimulationCancelCommand => simulationViewModel.SimulationCancelCommand;
+
         public MainViewModel()
         {
+            simulationViewModel = new SimulationViewModel(Robots, msg => Log.Add(msg));
+
             foreach (var type in robotService.GetAvailableRobotTypes())
                 Types.Add(type);
 

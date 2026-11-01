@@ -9,11 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RobotPlanet.Core\RobotPlanet.Core.csproj" />
+    <Compile Remove="Interfaces\**" />
+    <EmbeddedResource Remove="Interfaces\**" />
+    <None Remove="Interfaces\**" />
+    <Page Remove="Interfaces\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\" />
+    <ProjectReference Include="..\RobotPlanet.Core\RobotPlanet.Core.csproj" />
   </ItemGroup>
 
 </Project>
