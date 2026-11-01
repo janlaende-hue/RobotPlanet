@@ -134,13 +134,81 @@
             </Grid>
 
 
+            <TextBlock Text="Simulation"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       Margin="0,0,0,10"/>
+
+            <Grid Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Workload:" VerticalAlignment="Center" Margin="0,0,10,0" FontSize="12"/>
+                <TextBox Text="{Binding SimulationWorkloadInput, UpdateSourceTrigger=PropertyChanged}" 
+                         Grid.Column="1"
+                         Width="150" Height="30"/>
+            </Grid>
+
+            <TextBlock Text="Simulation Robots" FontSize="12" FontWeight="Bold" Margin="0,0,0,5"/>
+            <Grid Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="15"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="15"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <ComboBox Grid.Column="0" 
+                          ItemsSource="{Binding AvailableRobots}"
+                          SelectedItem="{Binding SimulationRobot1, Mode=TwoWay}"
+                          DisplayMemberPath="Name"
+                          Height="30"/>
+
+                <ComboBox Grid.Column="2" 
+                          ItemsSource="{Binding AvailableRobots}"
+                          SelectedItem="{Binding SimulationRobot2, Mode=TwoWay}"
+                          DisplayMemberPath="Name"
+                          Height="30"/>
+
+                <ComboBox Grid.Column="4" 
+                          ItemsSource="{Binding AvailableRobots}"
+                          SelectedItem="{Binding SimulationRobot3, Mode=TwoWay}"
+                          DisplayMemberPath="Name"
+                          Height="30"/>
+            </Grid>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <Button Command="{Binding RunSequentialCommand}" 
+                        Content="Run Sequential" 
+                        Width="120" Height="32" Margin="0,0,10,0" Padding="5"/>
+                <Button Command="{Binding RunParallelCommand}" 
+                        Content="Run Parallel" 
+                        Width="120" Height="32" Margin="0,0,10,0" Padding="5"/>
+                <Button Command="{Binding SimulationCancelCommand}" 
+                        Content="Cancel" 
+                        Width="80" Height="32" Padding="5"/>
+            </StackPanel>
+
+            <TextBlock Text="Simulation Results" FontSize="12" FontWeight="Bold" Margin="0,0,0,5"/>
+            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding SimulationResults}" CanUserAddRows="False" Height="150" Margin="0,0,0,10">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Robot" Binding="{Binding RobotName}" Width="80"/>
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="70"/>
+                    <DataGridTextColumn Header="Result" Binding="{Binding Result, StringFormat=F2}" Width="100"/>
+                    <DataGridTextColumn Header="Duration (ms)" Binding="{Binding DurationMs}" Width="80"/>
+                    <DataGridTextColumn Header="Error" Binding="{Binding Error}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
             <TextBlock Text="Log"
                        FontSize="16"
                        FontWeight="Bold"
                        Margin="0,0,0,10"/>
 
             <ListBox ItemsSource="{Binding Log}"
-                     Height="250"/>
+                     Height="150"/>
 
         </StackPanel>
 
